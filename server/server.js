@@ -1,14 +1,18 @@
 require("dotenv").config();
 const express = require('express');
 const app = express();
+const db = require('./db')
 
 // MIDDLEWARE
 
 app.use(express.json())
 
 // GET ALL restaurants
-app.get("/api/v1/restaurants", (req, res) => {
-    res.status(201).json({
+app.get("/api/v1/restaurants", async (req, res) => {
+    
+    const results = await db.query("select * from restaurants")
+    console.log(results)
+    res.status(200).json({
         status: "success",
         data: { 
             restaurant: ["Sushi Sam", "Ultra Sushi"],
